@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Notifications\sendNotification;
+use App\Notifications\databaseNotification;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,11 @@ Route::get('/temSend', function () {
     Notification::route('mail', 'banikalam95@gmail.com')
     ->notify(new sendNotification($user));
 });
-
+//database notification
+Route::get('/datasend', function () {
+     User::find(1)->notify(new databaseNotification); 
+   
+});
 
 
 Auth::routes();
