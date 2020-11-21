@@ -36,7 +36,14 @@ Route::get('/datasend', function () {
      User::find(1)->notify(new databaseNotification); 
    
 });
-
+Route::get('/read',function(){
+auth()->user()->unreadNotifications->markAsRead();
+return redirect()->back();
+})->name('read');
+Route::get('/singleread',function(){
+    auth()->user()->unreadNotifications->markAsRead();
+    return redirect()->back();
+    })->name('singleread');
 
 Auth::routes();
 

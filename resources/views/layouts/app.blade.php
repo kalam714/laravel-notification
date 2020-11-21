@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -52,6 +53,49 @@
                                 </li>
                             @endif
                         @else
+                       
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <i class="fa fa-bell"></i>
+                            @if(auth()->user()->unreadNotifications->count())
+                            <span class="badge badge-primary">{{auth()->user()->unreadNotifications->count()}}</span>
+                            </a>
+                            @endif
+                            
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <ul>
+                              
+                                <li><a href="{{route('read')}}">Mark as read</a></li>
+                                </ul>
+                                
+                                @foreach(auth()->user()->unreadNotifications as $notification)
+                                
+                                    
+                               
+                                <a class="dropdown-item" href="{{route('singleread')}}" ><span style="color: red">
+                                   {{$notification->data['data']}}
+                                </span>
+                           
+                                </a>
+                                
+                                @endforeach
+
+    
+                               
+                                @foreach(auth()->user()->readNotifications as $notification)
+                                    
+                                
+                                <a class="dropdown-item" href="#" >
+                                   {{$notification->data['data']}}
+                                </a>
+                              
+
+                                @endforeach
+                            
+                            </div>
+                        </li>
+                    
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
