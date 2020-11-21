@@ -24,6 +24,13 @@ Route::get('/ondmand', function () {
     Notification::route('mail', 'banikalam95@gmail.com')
             ->notify(new sendNotification);
 });
+Route::get('/temSend', function () {
+    /* User::find(1)->notify(new sendNotification); */
+    $user=User::find(1);
+    Notification::route('mail', 'banikalam95@gmail.com')
+    ->notify(new sendNotification($user));
+});
+
 
 
 Auth::routes();

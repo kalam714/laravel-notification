@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Models\User;
 
 class sendNotification extends Notification implements ShouldQueue
 {
@@ -16,9 +17,10 @@ class sendNotification extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
+    public $user;
+    public function __construct(User $user)
     {
-        //
+        $this->user=$user;
     }
 
     /**
@@ -40,10 +42,8 @@ class sendNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-                    ->line('This mail is send for test purpose.')
-                    ->action('Successfully done', url('/'))
-                    ->line('Thank you for using our application!');
+        return (new MailMessage)->view('emails',['user' => $this->user]);
+                    
     }
 
     /**
