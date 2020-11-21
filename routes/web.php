@@ -20,6 +20,11 @@ Route::get('/send', function () {
     $users=User::all();
     Notification::send($users, new sendNotification);
 });
+Route::get('/ondmand', function () {
+    Notification::route('mail', 'banikalam95@gmail.com')
+            ->notify(new sendNotification);
+});
+
 
 Auth::routes();
 
